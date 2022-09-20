@@ -16,10 +16,7 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public List<Category> findAll() {
-        List<Category> list = new ArrayList<>();
-        list.add(new Category(null, "Books"));
-        list.add(new Category(null, "Games"));
-        return list;
+    public Page<Category> findAll(Pageable pageable) {
+        return categoryRepository.findAll(pageable);
     }
 }
