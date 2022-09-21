@@ -1,5 +1,6 @@
 package com.joaovitorsb.dscatalog.controllers;
 
+import com.joaovitorsb.dscatalog.dtos.CategoryDTO;
 import com.joaovitorsb.dscatalog.entities.Category;
 import com.joaovitorsb.dscatalog.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<Page<Category>> findAll(Pageable pageable){
+    public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(categoryService.findAll(pageable));
     }
 
