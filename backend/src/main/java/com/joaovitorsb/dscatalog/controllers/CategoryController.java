@@ -26,6 +26,7 @@ public class CategoryController {
     public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(categoryService.findAll(pageable));
     }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<CategoryDTO> findById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(categoryService.findById(id));

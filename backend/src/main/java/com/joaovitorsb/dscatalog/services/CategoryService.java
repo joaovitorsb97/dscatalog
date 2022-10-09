@@ -3,6 +3,7 @@ package com.joaovitorsb.dscatalog.services;
 import com.joaovitorsb.dscatalog.dtos.CategoryDTO;
 import com.joaovitorsb.dscatalog.entities.Category;
 import com.joaovitorsb.dscatalog.repositories.CategoryRepository;
+import com.joaovitorsb.dscatalog.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -30,6 +31,6 @@ public class CategoryService {
     public CategoryDTO findById(Long id){
         Optional<Category> obj = categoryRepository.findById(id);
         Optional<CategoryDTO> objDTO = obj.stream().map(x -> new CategoryDTO(x)).findFirst();
-        return objDTO.get();
+        return objDTO.orElseThrow(() -> new EntityNotFoundException(id));
     }
 }
