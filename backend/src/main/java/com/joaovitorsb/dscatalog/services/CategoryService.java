@@ -33,4 +33,10 @@ public class CategoryService {
         Optional<CategoryDTO> objDTO = obj.stream().map(x -> new CategoryDTO(x)).findFirst();
         return objDTO.orElseThrow(() -> new EntityNotFoundException(id));
     }
+    @Transactional
+    public CategoryDTO insert(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        category.setName(categoryDTO.getName());
+        return new CategoryDTO(categoryRepository.save(category));
+    }
 }
