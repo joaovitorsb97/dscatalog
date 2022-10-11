@@ -3,7 +3,7 @@ package com.joaovitorsb.dscatalog.services;
 import com.joaovitorsb.dscatalog.dtos.CategoryDTO;
 import com.joaovitorsb.dscatalog.entities.Category;
 import com.joaovitorsb.dscatalog.repositories.CategoryRepository;
-import com.joaovitorsb.dscatalog.services.exceptions.EntityNotFoundException;
+import com.joaovitorsb.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,7 +31,7 @@ public class CategoryService {
     public CategoryDTO findById(Long id){
         Optional<Category> obj = categoryRepository.findById(id);
         Optional<CategoryDTO> objDTO = obj.stream().map(x -> new CategoryDTO(x)).findFirst();
-        return objDTO.orElseThrow(() -> new EntityNotFoundException(id));
+        return objDTO.orElseThrow(() -> new ResourceNotFoundException(id));
     }
     @Transactional
     public CategoryDTO insert(CategoryDTO categoryDTO) {
@@ -41,12 +41,13 @@ public class CategoryService {
     }
     @Transactional
     public CategoryDTO update(Long id, CategoryDTO categoryDTO) {
-        Category category = categoryRepository.getById(id);
-        updateData(categoryDTO, category);
-        return new CategoryDTO(categoryRepository.save(category));
-
-    }
-    public void updateData(CategoryDTO categoryDTO, Category category){
-        category.setName(categoryDTO.getName());
+        try{
+            Category category = categoryRepository.getById(id);
+            category.setName(categoryDTO.getName());
+            return new CategoryDTO(categoryRepository.save(category));
+        }
+        catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Id " + id + " not found");
+        }
     }
 }
