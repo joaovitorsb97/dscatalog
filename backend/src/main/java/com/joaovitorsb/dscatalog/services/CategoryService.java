@@ -39,4 +39,14 @@ public class CategoryService {
         category.setName(categoryDTO.getName());
         return new CategoryDTO(categoryRepository.save(category));
     }
+    @Transactional
+    public CategoryDTO update(Long id, CategoryDTO categoryDTO) {
+        Category category = categoryRepository.getById(id);
+        updateData(categoryDTO, category);
+        return new CategoryDTO(categoryRepository.save(category));
+
+    }
+    public void updateData(CategoryDTO categoryDTO, Category category){
+        category.setName(categoryDTO.getName());
+    }
 }
