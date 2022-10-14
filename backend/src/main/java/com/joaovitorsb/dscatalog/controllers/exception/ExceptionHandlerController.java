@@ -21,7 +21,7 @@ public class ExceptionHandlerController{
     }
     @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<StandardError> databaseError(DatabaseException exception, HttpServletRequest request){
-        StandardError standardError = new StandardError(Instant.now(), HttpStatus.BAD_REQUEST.value(), "DatabaseException", exception.getMessage(), request.getRequestURI());
+        StandardError standardError = new StandardError(Instant.now(), HttpStatus.BAD_REQUEST.value(), "Database error", exception.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
     }
 }
