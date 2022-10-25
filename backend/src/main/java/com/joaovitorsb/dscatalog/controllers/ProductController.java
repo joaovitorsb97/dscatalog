@@ -31,8 +31,19 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productService.findById(id));
     }
 
-   /* @PostMapping
+   @PostMapping
     public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO productDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.insert(productDTO));
-    } */
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO productDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(productService.update(id, productDTO));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<ProductDTO> delete(@PathVariable Long id){
+        productService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
