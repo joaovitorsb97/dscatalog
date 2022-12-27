@@ -26,8 +26,8 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
     @Transactional(readOnly = true)
-    public Page<CategoryDTO> findAllPaged(PageRequest pageRequest) {
-       Page<Category> page = categoryRepository.findAll(pageRequest);
+    public Page<CategoryDTO> findAllPaged(Pageable pageable) {
+       Page<Category> page = categoryRepository.findAll(pageable);
        return page.map(CategoryDTO::new);
     }
     @Transactional(readOnly = true)
