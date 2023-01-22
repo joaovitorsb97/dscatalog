@@ -1,8 +1,9 @@
 package com.joaovitorsb.dscatalog.services;
 
-import com.joaovitorsb.dscatalog.dtos.CategoryDTO;
-import com.joaovitorsb.dscatalog.entities.Category;
-import com.joaovitorsb.dscatalog.repositories.CategoryRepository;
+import com.joaovitorsb.dscatalog.dtos.RoleDTO;
+import com.joaovitorsb.dscatalog.entities.Role;
+import com.joaovitorsb.dscatalog.repositories.RoleRepository;
+import com.joaovitorsb.dscatalog.repositories.RoleRepository;
 import com.joaovitorsb.dscatalog.services.exceptions.DatabaseException;
 import com.joaovitorsb.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,32 +18,32 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
-public class CategoryService {
+public class RoleService {
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private RoleRepository roleRepository;
     @Transactional(readOnly = true)
-    public Page<CategoryDTO> findAllPaged(Pageable pageable) {
-       Page<Category> page = categoryRepository.findAll(pageable);
-       return page.map(CategoryDTO::new);
+    public Page<RoleDTO> findAllPaged(Pageable pageable) {
+       Page<Role> page = roleRepository.findAll(pageable);
+       return page.map(RoleDTO::new);
     }
     @Transactional(readOnly = true)
-    public CategoryDTO findById(Long id){
-        Optional<Category> obj = categoryRepository.findById(id);
-        return obj.stream().map(CategoryDTO::new).findFirst().orElseThrow(() -> new ResourceNotFoundException(id));
+    public RoleDTO findById(Long id){
+        Optional<Role> obj = roleRepository.findById(id);
+        return obj.stream().map(RoleDTO::new).findFirst().orElseThrow(() -> new ResourceNotFoundException(id));
     }
     @Transactional
-    public CategoryDTO insert(CategoryDTO categoryDTO) {
-        Category category = new Category();
-        category.setName(categoryDTO.getName());
-        return new CategoryDTO(categoryRepository.save(category));
+    public RoleDTO insert(RoleDTO categoryDTO) {
+        Role category = new Role();
+        category.setAuthority(categoryDTO.getAuthority());
+        return new RoleDTO(roleRepository.save(category));
     }
     @Transactional
-    public CategoryDTO update(Long id, CategoryDTO categoryDTO) {
+    public RoleDTO update(Long id, RoleDTO categoryDTO) {
         try{
-            Category category = categoryRepository.getById(id);
-            category.setName(categoryDTO.getName());
-            return new CategoryDTO(categoryRepository.save(category));
+            Role role = roleRepository.getById(id);
+            role.setAuthority(categoryDTO.getAuthority());
+            return new RoleDTO(roleRepository.save(role));
         }
         catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Id " + id + " not found");
@@ -50,7 +51,7 @@ public class CategoryService {
     }
     public void delete(Long id) {
         try{
-            categoryRepository.deleteById(id);
+            roleRepository.deleteById(id);
         }catch (EmptyResultDataAccessException e){
             throw new ResourceNotFoundException("Id " + id + " not found");
         }catch (DataIntegrityViolationException e){
