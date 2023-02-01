@@ -2,6 +2,8 @@ package com.joaovitorsb.dscatalog.dtos;
 
 import com.joaovitorsb.dscatalog.entities.User;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,8 +12,11 @@ public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    @NotBlank(message = "You must to insert the first name")
     private String firstName;
+    @NotBlank(message = "You must to insert the last name")
     private String lastName;
+    @Email(message = "You must to insert a valid email")
     private String email;
     private String password;
 

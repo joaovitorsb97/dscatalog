@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/products")
 public class ProductController {
@@ -29,12 +31,12 @@ public class ProductController {
     }
 
    @PostMapping
-    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO productDTO){
+    public ResponseEntity<ProductDTO> insert(@RequestBody @Valid ProductDTO productDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.insert(productDTO));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO productDTO){
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody @Valid ProductDTO productDTO){
         return ResponseEntity.status(HttpStatus.OK).body(productService.update(id, productDTO));
     }
 

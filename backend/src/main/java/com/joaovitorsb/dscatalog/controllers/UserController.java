@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
@@ -26,11 +28,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
     }
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO userDTO){
+    public ResponseEntity<UserDTO> insert(@RequestBody @Valid UserInsertDTO userDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.insert(userDTO));
     }
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserDTO userDTO){
         return ResponseEntity.status(HttpStatus.OK).body(userService.update(id, userDTO));
     }
     @DeleteMapping(value = "/{id}")
