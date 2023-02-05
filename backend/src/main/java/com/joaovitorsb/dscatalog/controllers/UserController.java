@@ -2,6 +2,7 @@ package com.joaovitorsb.dscatalog.controllers;
 
 import com.joaovitorsb.dscatalog.dtos.UserDTO;
 import com.joaovitorsb.dscatalog.dtos.UserInsertDTO;
+import com.joaovitorsb.dscatalog.dtos.UserUpdateDTO;
 import com.joaovitorsb.dscatalog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,7 +33,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.insert(userDTO));
     }
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserDTO userDTO){
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO userDTO){
         return ResponseEntity.status(HttpStatus.OK).body(userService.update(id, userDTO));
     }
     @DeleteMapping(value = "/{id}")
