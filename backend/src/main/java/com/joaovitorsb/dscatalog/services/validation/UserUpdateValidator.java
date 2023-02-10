@@ -34,7 +34,7 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid,
         List<FieldMessage> list = new ArrayList<>();
 
         @SuppressWarnings("unchecked") //Suppress the yellow warning
-        var uriVars = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE); //Get all attributes from URL
+        var uriVars = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE); //Get all attributes from URI
         Long userId = Long.parseLong(uriVars.get("id")); //Access id from user/{id} request
 
         User user = userRepository.findByEmail(dto.getEmail());
