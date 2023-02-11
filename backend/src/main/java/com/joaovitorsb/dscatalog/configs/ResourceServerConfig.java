@@ -31,10 +31,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(PUBLIC).permitAll()
-                .antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll()
-                .antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR", "ADMIN")
-                .antMatchers(ADMIN).hasRole("ADMIN")
-                .anyRequest().authenticated();
+        .antMatchers(PUBLIC).permitAll() //Everybody can access vector PUBLIC routes
+        .antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll() //Permit only method GET for all at vector OPERATOR_OR_ADMIN routes
+        .antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR", "ADMIN") //Only entity with roles "OPERATOR or "ADMIN" can access vector OPERATOR_OR_ADMIN routes
+        .antMatchers(ADMIN).hasRole("ADMIN") //Only entity with role "ADMIN" can access vector ADMIN routes
+        .anyRequest().authenticated(); //Other routes needs to be authenticated
     }
 }
