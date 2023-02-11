@@ -12,7 +12,6 @@ public class CategoryDTO implements Serializable {
     private Long id;
     private String name;
 
-    Set<ProductDTO> products = new HashSet<>();
 
     public CategoryDTO() {
     }
@@ -25,7 +24,6 @@ public class CategoryDTO implements Serializable {
     public CategoryDTO(Category entity){
         this.id = entity.getId();
         this.name = entity.getName();
-        entity.getProducts().forEach(product -> products.add(new ProductDTO(product)));
     }
 
     public Long getId() {
@@ -42,9 +40,5 @@ public class CategoryDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<ProductDTO> getProducts() {
-        return products;
     }
 }
